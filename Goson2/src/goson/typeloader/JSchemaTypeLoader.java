@@ -18,8 +18,16 @@ import gw.util.GosuExceptionUtil;
 import gw.util.Pair;
 import gw.util.concurrent.LockingLazyVar;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
+
+import org.raml.model.ActionType;
+import org.raml.model.Raml;
+import org.raml.model.Resource;
+import org.raml.parser.rule.ValidationResult;
+import org.raml.parser.visitor.RamlDocumentBuilder;
+import org.raml.parser.visitor.RamlValidationService;
 
 public class JSchemaTypeLoader extends TypeLoaderBase {
 
@@ -94,8 +102,27 @@ public class JSchemaTypeLoader extends TypeLoaderBase {
               throw GosuExceptionUtil.forceThrow(e);
             }
           }
+          int counter = 0;
           for(JsonFile ramlFile : _ramlFiles.get()){
         	  System.out.println("Raml file: " + ramlFile.rootTypeName);
+        	  String ramlLocation = ramlFile.file.toJavaFile().getAbsolutePath();
+        	  Raml raml = new RamlDocumentBuilder().build(ramlLocation);
+        	  
+        	  for(String resKey : raml.getResources().keySet()){
+        		  Resource res = raml.getResources().get(resKey);
+        		  for(ActionType actKey : res.getActions().keySet()){
+        			  org.raml.model.Action act = res.getActions().get(actKey);
+        			  for(String bodKey : act.getBody().keySet())
+        			  {
+        				  org.raml.model.MimeType bod = act.getBody().get(bodKey);
+        				  String sch = bod.getSchema();
+        				  File schemaFile = new File(ramlFile.file.toJavaFile().getParent() + "/" + res.getDisplayName() + counter + "schema.json");
+        				  
+        			  }
+        		  }
+        	  }
+        	  
+        	  System.out.println(raml.getTitle());
           }
       	System.out.println("Trying to init rpc");
           for (JsonFile jshRpcFile : _jscRpcFiles.get()) {

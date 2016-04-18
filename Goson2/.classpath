@@ -242,5 +242,6 @@
 	<classpathentry kind="lib" path="C:/MIGGWProject/CommonSoftware/tomcat7/apache-tomcat-7.0.57/lib/tomcat-util.jar"/>
 	<classpathentry kind="lib" path="C:/MIGGWProject/CommonSoftware/tomcat7/apache-tomcat-7.0.57/lib/websocket-api.jar"/>
 	<classpathentry kind="lib" path="C:/MIGGWProject/Workspace/r1/CCTomcat/webapps/cc/WEB-INF/lib/http-2.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/t159975/git/raml-java-parser/raml-java-parser/target/raml-parser-0.9-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
